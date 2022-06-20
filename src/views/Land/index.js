@@ -7,6 +7,8 @@ import LandForm from "../../components/LandForm";
 
 export default function LandHomeView() {
   const [lands, setLands] = useState([]);
+  const [foundLands, setFoundLands] = useState([]);
+  const [searchItem, setSearchItem] = useState('');
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [geom, setGeom] = useState("");
@@ -22,6 +24,7 @@ export default function LandHomeView() {
       alert(data.message);
     } else {
       setLands(data.data);
+      setFoundLands(data.data);
       console.log(data);
     };
   };
@@ -78,6 +81,20 @@ export default function LandHomeView() {
     }
   };
 
+  const filter = (e) => {
+    const keyword = e.target.value;
+    if (keyword !== '') {
+      const results = lands.filter((land) => {
+        return land.name.toLowerCase().startsWith(keyword.toLowerCase());
+      });
+      setFoundLands(results);
+    } else {
+      setFoundLands(lands);
+    }
+
+    setSearchItem(keyword);
+  };
+
   useEffect(() => {
     getLands();
     return () => {
@@ -88,9 +105,9 @@ export default function LandHomeView() {
     <div className="subcontainer">
 
       <div className="list">
-        <input type={"search"} className={'form-control mb-2'} placeholder={'Toca para buscar...'} />
+        <input value={searchItem} onChange={filter} type={"search"} className={'form-control mb-2'} placeholder={'Toca para buscar...'} />
         <AddButton setIsFormVisible={setIsFormVisible} />
-        <LandList data={lands} deleteLand={deleteLand} />
+        <LandList data={foundLands} deleteLand={deleteLand} />
       </div>
       <div className="map">
         {
