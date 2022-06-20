@@ -9,7 +9,12 @@ export default function LandForm(props) {
                 <button onClick={props.addLand} type="button" className={'form-control btn btn-success mb-3'}>
                     Enviar
                 </button>
-                <button onClick={() => props.setIsFormVisible(false)} type="button" className={'form-control btn btn-danger'}>
+                <button onClick={() => {
+                    props.setName("");
+                    props.setCity("");
+                    props.setGeom("");
+                    props.setIsFormVisible(false)
+                }} type="button" className={'form-control btn btn-danger'}>
                     Cerrar
                 </button>
             </form>

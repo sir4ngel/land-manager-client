@@ -71,6 +71,9 @@ export default function LandHomeView() {
         getLands();
       };
 
+      setName("");
+      setCity("");
+      setGeom("");
       setIsFormVisible(false);
     }
   };
